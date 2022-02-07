@@ -1,0 +1,37 @@
+---
+
+- name: install forticlient (from deb package)
+  become: true
+  ansible.builtin.apt:
+    deb: https://links.fortinet.com/forticlient/deb/vpnagent
+  when: forticlient_source == "deb"
+
+- name: add forticlient apt key
+  become: true
+  ansible.builtin.apt_key:
+    url: "https://repo.fortinet.com/repo/{{ forticlient_version }}/ubuntu/DEB-GPG-KEY"
+    state: present
+    # TODO - Verify key
+  when: forticlient_source == "apt"
+
+- name: add forticlient apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ forticlient_arch }}] https://repo.fortinet.com/repo/{{ forticlient_version }}/ubuntu/ /bionic multiverse"
+  register: forticlient_repository
+  when: forticlient_source == "apt"
+
+- name: update package cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+  when:
+    - forticlient_source == "apt"
+    - forticlient_repository.changed
+
+- name: install forticlient
+  become: true
+  ansible.builtin.apt:
+    state: present
+    name: forticlient
+  when: forticlient_source == "apt"

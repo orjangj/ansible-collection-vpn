@@ -1,0 +1,4 @@
+---
+forticlient_version: "7.0"
+forticlient_arch: "amd64"
+forticlient_source: "apt"

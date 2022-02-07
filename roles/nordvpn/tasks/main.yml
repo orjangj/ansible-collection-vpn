@@ -1,0 +1,27 @@
+---
+- name: add nordvpn repository (from deb package)
+  become: true
+  ansible.builtin.apt:
+    deb: https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/nordvpn-release_1.0.0_all.deb
+  register: nordvpn_repository
+
+- name: update package cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: yes
+  when: nordvpn_repository.changed
+
+- name: install nordvpn
+  become: true
+  ansible.builtin.apt:
+    name: nordvpn
+    state: latest
+
+- name: add users to nordvpn group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: nordvpn
+    append: yes
+  with_items: "{{ nordvpn_users }}"
+  when: nordvpn_users | length > 0
+  register: result
