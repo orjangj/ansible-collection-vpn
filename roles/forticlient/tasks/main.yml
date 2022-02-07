@@ -35,3 +35,8 @@
     state: present
     name: forticlient
   when: forticlient_source == "apt"
+
+- name: add executable to system-wide path
+  ansible.builtin.copy:
+    dest: /etc/profile.d/custom-path.sh
+    content: 'PATH=$PATH:/opt/forticlient/fortivpn'
