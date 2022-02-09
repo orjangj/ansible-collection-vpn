@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+
+# TODO - Add user to nordvpn group
+
+  roles:
+    - role: nordvpn

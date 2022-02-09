@@ -1,0 +1,14 @@
+---
+- name: Verify
+  hosts: all
+
+  tasks:
+    - name: check if nordvpn is installed
+      package:
+        name: nordvpn
+        state: present
+      check_mode: true
+      register: install
+      failed_when: (install is changed) or (install is failed)
+  
+# TODO - Check if users are added to nordvpn group

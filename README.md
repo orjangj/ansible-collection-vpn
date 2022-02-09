@@ -2,7 +2,7 @@
 
 This collection includes Ansible roles and content to help with vpn automation.
 
-Roles included in this collection (click on the link to see the role's README and documentation):
+Roles included in this collection:
 
   - `orjangj.vpn.nordvpn` ([documentation](https://github.com/orjangj/ansible-collection-vpn/blob/master/roles/nordvpn/README.md))
   - `orjangj.vpn.forticlient` ([documentation](https://github.com/orjangj/ansible-collection-vpn/blob/master/roles/forticlient/README.md))
@@ -33,7 +33,7 @@ collections:
 
 ## Usage
 
-Here's an example playbook which installs Docker, and adds the ansible user to the Docker group:
+Here's an example playbook which installs NordVPN and FortiClient VPN, and adds the ansible user to the nordvpn group:
 
 ```yaml
 - hosts: all
